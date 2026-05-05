@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { habitsApi, streakApi } from '../services/api';
+import { habitsApi, streakApi, usersApi } from '../services/api';
 import type { Page } from '../App';
 
 type Habit = { id: number; title: string; description?: string; active: boolean };
@@ -11,6 +11,7 @@ export default function Dashboard({ setPage }: { setPage: (p: Page) => void }) {
   const [newHabit, setNewHabit] = useState({ title: '', description: '' });
   const [edit, setEdit] = useState<EditState>(null);
   const [error, setError] = useState('');
+  const userId = Number(localStorage.getItem('userId'));
 
   useEffect(() => {
     if (!localStorage.getItem('token')) { setPage('login'); return; }
@@ -69,6 +70,17 @@ export default function Dashboard({ setPage }: { setPage: (p: Page) => void }) {
     }
   }
 
+  async function handleDeleteAccount() {
+    if (!confirm('Tem certeza que deseja deletar sua conta?')) return;
+    try {
+      await usersApi.delete(userId);
+      localStorage.clear();
+      setPage('login');
+    } catch {
+      setError('Erro ao deletar conta.');
+    }
+  }
+
   function handleLogout() {
     localStorage.removeItem('token');
     setPage('login');
@@ -121,6 +133,16 @@ export default function Dashboard({ setPage }: { setPage: (p: Page) => void }) {
           )}
         </div>
       ))}
+
+      <h2>Alterar Senha</h2>
+      <form onSubmit={handleForgotPassword} style={{ display: 'flex', gap: 8 }}>
+        <input placeholder="Nova senha" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+        <button type="submit">Salvar</button>
+      </form>
+
+      <div style={{ marginTop: 32 }}>
+        <button onClick={handleDeleteAccount} style={{ color: 'red' }}>Deletar conta</button>
+      </div>
     </div>
   );
 }

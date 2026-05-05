@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import type { Page } from '../App';
 
 export default function Register({ setPage }: { setPage: (p: Page) => void }) {
@@ -13,7 +13,7 @@ export default function Register({ setPage }: { setPage: (p: Page) => void }) {
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/register', form);
+      await api.post('/auth/register', form);
       setPage('login');
     } catch {
       setError('Erro ao registrar. Verifique os dados.');

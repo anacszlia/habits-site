@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import type { Page } from '../App';
 
 export default function Login({ setPage }: { setPage: (p: Page) => void }) {
@@ -10,7 +10,7 @@ export default function Login({ setPage }: { setPage: (p: Page) => void }) {
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/login', { email, password });
+      const res = await api.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
       setPage('dashboard');
     } catch {
@@ -33,6 +33,14 @@ export default function Login({ setPage }: { setPage: (p: Page) => void }) {
           Registrar
         </button>
       </p>
+      <p style={{ marginTop: 16, textAlign: 'center' }}>
+        Esqueceu sua senha?{' '}
+        <button onClick={() => setPage('forgotPassword')} style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>
+          Recuperar senha
+        </button>
+      </p>
+
+      await usersApi.delete(userId)
     </div>
   );
 }
