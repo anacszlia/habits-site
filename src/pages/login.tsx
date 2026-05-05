@@ -1,0 +1,38 @@
+import { useState } from 'react';
+import axios from 'axios';
+import type { Page } from '../App';
+
+export default function Login({ setPage }: { setPage: (p: Page) => void }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:3000/login', { email, password });
+      localStorage.setItem('token', res.data.token);
+      setPage('dashboard');
+    } catch {
+      setError('Email ou senha inválidos.');
+    }
+  }
+
+  return (
+    <div style={{ maxWidth: 360, margin: '80px auto', padding: 24 }}>
+      <h1>Login</h1>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input placeholder="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <button type="submit">Entrar</button>
+      </form>
+      <p style={{ marginTop: 16, textAlign: 'center' }}>
+        Não tem conta?{' '}
+        <button onClick={() => setPage('register')} style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>
+          Registrar
+        </button>
+      </p>
+    </div>
+  );
+}
