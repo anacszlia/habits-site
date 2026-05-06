@@ -39,7 +39,7 @@ export default function Dashboard({ setPage }: { setPage: (p: Page) => void }) {
       setError('Erro ao deletar conta.');
     }
   }
-   async function handleUpdatePassword(e: React.FormEvent) {
+   async function handleUpdatePassword() {
     const password = prompt('Nova senha:');
     if (!password) return;
     try {
