@@ -33,12 +33,7 @@ export default function Login({ setPage }: { setPage: (p: Page) => void }) {
           Registrar
         </button>
       </p>
-      <p style={{ marginTop: 8, textAlign: 'center' }}>
-        Esqueceu sua senha?{' '}
-        <button onClick={() => setPage('forgotPassword')} style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>
-          Recuperar senha
-        </button>
-      </p>
+
     </div>
   );
 }
