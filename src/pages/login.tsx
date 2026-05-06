@@ -27,20 +27,18 @@ export default function Login({ setPage }: { setPage: (p: Page) => void }) {
         <input placeholder="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button type="submit">Entrar</button>
       </form>
-      <p style={{ marginTop: 16, textAlign: 'center' }}>
+      <p style={{ marginTop: 12, textAlign: 'center' }}>
         Não tem conta?{' '}
         <button onClick={() => setPage('register')} style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>
           Registrar
         </button>
       </p>
-      <p style={{ marginTop: 16, textAlign: 'center' }}>
+      <p style={{ marginTop: 8, textAlign: 'center' }}>
         Esqueceu sua senha?{' '}
         <button onClick={() => setPage('forgotPassword')} style={{ background: 'none', border: 'none', color: 'blue', cursor: 'pointer', padding: 0 }}>
           Recuperar senha
         </button>
       </p>
-
-      await usersApi.delete(userId)
     </div>
   );
 }
