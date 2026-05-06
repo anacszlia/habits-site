@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { habitsApi, streakApi } from '../services/api';
+import { habitsApi, streakApi, getUserIdFromToken } from '../services/api';
 import type { Page } from '../App';
 
 type Habit = { id: number; title: string; description?: string; active: boolean };
@@ -19,9 +19,11 @@ export default function Dashboard({ setPage }: { setPage: (p: Page) => void }) {
 
   async function fetchData() {
     try {
+      const userId = getUserIdFromToken();
       const [habitsRes, streakRes] = await Promise.all([habitsApi.getAll(), streakApi.get()]);
       setHabits(habitsRes.data);
-      setStreak(streakRes.data.currentStreak ?? 0);
+      const userStreak = streakRes.data.find((s: { userId: number; currentStreak: number }) => s.userId === userId);
+      setStreak(userStreak?.currentStreak ?? 0);
     } catch {
       setError('Erro ao carregar dados.');
     }

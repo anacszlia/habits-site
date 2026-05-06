@@ -4,7 +4,7 @@ import Register from './pages/register';
 import Dashboard from './pages/dashboard';
 import ChangePerfil from './pages/alterarPerfil';
 
-export type Page = 'login' | 'register' | 'dashboard' | 'forgotPassword' | 'changePerfil';
+export type Page = 'login' | 'register' | 'dashboard' |'changePerfil';
 
 function App() {
   const [page, setPage] = useState<Page>('login');

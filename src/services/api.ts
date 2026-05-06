@@ -46,6 +46,7 @@ export const habitsApi = {
 
 export const streakApi = {
   get: () => api.get('/streaks'),
+  getByUser: (userId: number) => api.get(`/streaks/${userId}`),
 };
 
 export default api;
